@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game of Thrones Quotes</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-content>
+          <v-container grid-list-md text-xs-center>
+            <br>
+            <br>
+            <br>
+            <v-layout align-center justify-center column fill-height>
+              <v-flex xs12 sm6 md3>
+                <p class="display-1">"{{ quote }}"</p>
+              </v-flex>
+              <v-flex xs12 sm6 md3>
+                <p class="subheading">{{ character }}
+              </v-flex>
+            </v-layout>
+            <br>
+            <br>
+            <br>
+            <v-layout justify-end column fill-height>
+              <v-flex xs12 sm6 md3>
+                <v-btn v-on:click="loadQuote" raised>New Quote</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-content>
+      </v-app>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          quote: '',
+          character: ''
+        },
+        created: function() {
+          this.loadQuote();
+        },
+        methods: {
+          loadQuote: function() {
+            this.quote = 'Loading...';
+            this.character = '';
+            var vue = this;
+            axios.get('https://got-quotes.herokuapp.com/quotes')
+            .then(function (response) {
+              vue.quote = response.data["quote"];
+              vue.character = response.data["character"];
+            })
+            .catch(function (error) {
+              vue.character = 'Could not load quote';
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
