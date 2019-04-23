@@ -2,4 +2,6 @@
 
 <h1 align="center">Learning Vue.js</h1>
 
+<p align="center">
 Collection of practice sites made while trying my hand at learning Vue.js
+</p>
